@@ -1,0 +1,8 @@
+name: raw.characters_badges
+type: ingestr
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.characters_badges
+  target_table: raw.characters_badges

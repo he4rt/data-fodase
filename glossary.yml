@@ -1,0 +1,522 @@
+entities:
+  User:
+    description: Core user entity.
+    attributes:
+      ID:
+        type: uuid
+        description: Unique identifier for the user.
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      Username:
+        type: varchar
+        description: Unique username.
+        checks:
+          - name: not_null
+          - name: unique
+      Name:
+        type: varchar
+        description: Display name.
+        checks:
+          - name: not_null
+      Email:
+        type: varchar
+        description: User email address.
+      Password:
+        type: varchar
+        description: Hashed password.
+      IsDonator:
+        type: boolean
+        description: Flag indicating if the user is a donator.
+        checks:
+          - name: not_null
+      CreatedAt:
+        type: timestamp
+        description: Creation timestamp.
+      UpdatedAt:
+        type: timestamp
+        description: Last update timestamp.
+
+  Character:
+    description: RPG character associated with a user.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      UserID:
+        type: uuid
+        description: Foreign key to User.
+        checks:
+          - name: not_null
+      Experience:
+        type: integer
+        description: Character experience points.
+        checks:
+          - name: not_null
+          - name: positive
+      Reputation:
+        type: integer
+        description: Character reputation points.
+        checks:
+          - name: not_null
+      DailyBonusClaimedAt:
+        type: timestamp
+        description: Timestamp of last daily bonus claim.
+
+  Provider:
+    description: OAuth provider link for a user.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      UserID:
+        type: uuid
+        description: Foreign key to User.
+        checks:
+          - name: not_null
+      Provider:
+        type: varchar
+        description: Name of the provider (e.g., discord).
+        checks:
+          - name: not_null
+      ProviderID:
+        type: varchar
+        description: Unique ID from the provider.
+        checks:
+          - name: not_null
+      Email:
+        type: varchar
+        description: Email associated with the provider account.
+
+  Badge:
+    description: Achievement badge.
+    attributes:
+      ID:
+        type: bigint
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      Name:
+        type: varchar
+        description: Name of the badge.
+        checks:
+          - name: not_null
+      Description:
+        type: text
+        description: Description of the badge.
+      RedeemCode:
+        type: varchar
+        description: Code to redeem the badge.
+        checks:
+          - name: not_null
+      Active:
+        type: boolean
+        description: Whether the badge is active.
+        checks:
+          - name: not_null
+
+  Meeting:
+    description: Scheduled meeting.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      AdminID:
+        type: uuid
+        description: User ID of the meeting admin.
+        checks:
+          - name: not_null
+      MeetingTypeID:
+        type: bigint
+        description: ID of the meeting type.
+        checks:
+          - name: not_null
+      StartsAt:
+        type: timestamp
+        description: Start time of the meeting.
+        checks:
+          - name: not_null
+      EndsAt:
+        type: timestamp
+        description: End time of the meeting.
+      Content:
+        type: text
+        description: Meeting content/description.
+
+  Message:
+    description: Chat message log.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      ProviderID:
+        type: uuid
+        description: Provider ID of the sender.
+        checks:
+          - name: not_null
+      ProviderMessageID:
+        type: varchar
+        description: ID of the message from the provider.
+      SeasonID:
+        type: integer
+        description: ID of the season.
+        checks:
+          - name: not_null
+      ChannelID:
+        type: varchar
+        description: ID of the channel.
+      Content:
+        type: text
+        description: Message content.
+        checks:
+          - name: not_null
+      ObtainedExperience:
+        type: integer
+        description: XP gained from the message.
+        checks:
+          - name: not_null
+      SentAt:
+        type: timestamp
+        description: Timestamp when message was sent.
+
+  VoiceMessage:
+    description: Voice activity log.
+    attributes:
+      ID:
+        type: bigint
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      ProviderID:
+        type: uuid
+        description: Provider ID of the user.
+        checks:
+          - name: not_null
+      SeasonID:
+        type: integer
+        description: ID of the season.
+        checks:
+          - name: not_null
+      ChannelName:
+        type: varchar
+        description: Name of the voice channel.
+        checks:
+          - name: not_null
+      State:
+        type: varchar
+        description: State of the voice activity.
+        checks:
+          - name: not_null
+      ObtainedExperience:
+        type: integer
+        description: XP gained from voice activity.
+        checks:
+          - name: not_null
+
+  Feedback:
+    description: User feedback.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      SenderID:
+        type: uuid
+        description: User ID of the sender.
+        checks:
+          - name: not_null
+      TargetID:
+        type: uuid
+        description: User ID of the target (if applicable).
+        checks:
+          - name: not_null
+      Type:
+        type: varchar
+        description: Type of feedback.
+        checks:
+          - name: not_null
+      Message:
+        type: text
+        description: Feedback message.
+        checks:
+          - name: not_null
+
+  FeedbackReview:
+    description: Staff review of a feedback.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      FeedbackID:
+        type: uuid
+        description: ID of the feedback being reviewed.
+        checks:
+          - name: not_null
+      StaffID:
+        type: uuid
+        description: User ID of the staff member.
+        checks:
+          - name: not_null
+      Status:
+        type: varchar
+        description: Status of the review.
+        checks:
+          - name: not_null
+      Reason:
+        type: text
+        description: Reason for the status.
+      ReceivedAt:
+        type: timestamp
+        description: Timestamp when review was received.
+        checks:
+          - name: not_null
+
+  Season:
+    description: Competitive season.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      Name:
+        type: varchar
+        description: Season name.
+        checks:
+          - name: not_null
+      Description:
+        type: text
+        description: Season description.
+        checks:
+          - name: not_null
+      StartedAt:
+        type: timestamp
+        description: Start date.
+      EndedAt:
+        type: timestamp
+        description: End date.
+      MessagesCount:
+        type: integer
+        description: Total messages in season.
+      ParticipantsCount:
+        type: integer
+        description: Total participants.
+      MeetingCount:
+        type: integer
+        description: Total meetings.
+      BadgesCount:
+        type: integer
+        description: Total badges awarded.
+
+  SeasonRanking:
+    description: Character ranking in a season.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      SeasonID:
+        type: varchar
+        description: ID of the season.
+        checks:
+          - name: not_null
+      CharacterID:
+        type: uuid
+        description: ID of the character.
+        checks:
+          - name: not_null
+      RankingPosition:
+        type: integer
+        description: Rank position.
+        checks:
+          - name: not_null
+      Level:
+        type: integer
+        description: Character level at end of season.
+        checks:
+          - name: not_null
+      Experience:
+        type: integer
+        description: Total XP.
+        checks:
+          - name: not_null
+      MessagesCount:
+        type: integer
+        description: Messages sent by character.
+      BadgesCount:
+        type: integer
+        description: Badges earned by character.
+      MeetingsCount:
+        type: integer
+        description: Meetings attended by character.
+
+  CharacterBadge:
+    description: Badge earned by a character.
+    attributes:
+      CharacterID:
+        type: uuid
+        description: ID of the character.
+        checks:
+          - name: not_null
+      BadgeID:
+        type: bigint
+        description: ID of the badge.
+        checks:
+          - name: not_null
+      ClaimedAt:
+        type: timestamp
+        description: Timestamp when badge was claimed.
+        checks:
+          - name: not_null
+
+  UserAddress:
+    description: User physical address.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      UserID:
+        type: uuid
+        description: Foreign key to User.
+        checks:
+          - name: not_null
+      Country:
+        type: varchar
+        description: Country code.
+      State:
+        type: varchar
+        description: State code.
+      City:
+        type: varchar
+        description: City name.
+      ZipCode:
+        type: varchar
+        description: Zip code.
+
+  UserInformation:
+    description: Extended user profile information.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      UserID:
+        type: uuid
+        description: Foreign key to User.
+        checks:
+          - name: not_null
+      Name:
+        type: varchar
+        description: Full name.
+      Nickname:
+        type: varchar
+        description: Nickname.
+      LinkedinURL:
+        type: varchar
+        description: LinkedIn profile URL.
+      GithubURL:
+        type: varchar
+        description: GitHub profile URL.
+      Birthdate:
+        type: date
+        description: Date of birth.
+      About:
+        type: text
+        description: About me text.
+
+  MeetingType:
+    description: Type of meeting.
+    attributes:
+      ID:
+        type: bigint
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      Name:
+        type: varchar
+        description: Name of the meeting type.
+        checks:
+          - name: not_null
+      WeekDay:
+        type: integer
+        description: Day of the week.
+        checks:
+          - name: not_null
+      StartAt:
+        type: time
+        description: Start time.
+        checks:
+          - name: not_null
+
+  MeetingParticipant:
+    description: Participant in a meeting.
+    attributes:
+      MeetingID:
+        type: uuid
+        description: Foreign key to Meeting.
+        checks:
+          - name: not_null
+      UserID:
+        type: uuid
+        description: Foreign key to User.
+        checks:
+          - name: not_null
+      AttendAt:
+        type: timestamp
+        description: Timestamp of attendance.
+        checks:
+          - name: not_null
+
+  CharacterLevelingLog:
+    description: Log of character level ups.
+    attributes:
+      ID:
+        type: uuid
+        primary_key: true
+        checks:
+          - name: not_null
+          - name: unique
+      SeasonID:
+        type: integer
+        description: ID of the season.
+        checks:
+          - name: not_null
+      CharacterID:
+        type: uuid
+        description: ID of the character.
+        checks:
+          - name: not_null
+      Level:
+        type: integer
+        description: Level reached.
+        checks:
+          - name: not_null

@@ -1,0 +1,36 @@
+name: raw.seasons_rankings
+type: ingestr
+
+depends:
+  - raw.seasons
+  - raw.characters
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.seasons_rankings
+  target_table: raw.seasons_rankings
+
+columns:
+  - name: id
+    extends: SeasonRanking.ID
+  - name: season_id
+    extends: SeasonRanking.SeasonID
+  - name: character_id
+    extends: SeasonRanking.CharacterID
+  - name: ranking_position
+    extends: SeasonRanking.RankingPosition
+  - name: level
+    extends: SeasonRanking.Level
+  - name: experience
+    extends: SeasonRanking.Experience
+  - name: messages_count
+    extends: SeasonRanking.MessagesCount
+  - name: badges_count
+    extends: SeasonRanking.BadgesCount
+  - name: meetings_count
+    extends: SeasonRanking.MeetingsCount
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

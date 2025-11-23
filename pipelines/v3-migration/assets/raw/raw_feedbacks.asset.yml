@@ -1,0 +1,28 @@
+name: raw.feedbacks
+type: ingestr
+
+depends:
+  - raw.users
+  - raw.seasons
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.feedbacks
+  target_table: raw.feedbacks
+
+columns:
+  - name: id
+    extends: Feedback.ID
+  - name: sender_id
+    extends: Feedback.SenderID
+  - name: target_id
+    extends: Feedback.TargetID
+  - name: type
+    extends: Feedback.Type
+  - name: message
+    extends: Feedback.Message
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

@@ -1,0 +1,33 @@
+name: raw.messages
+type: ingestr
+
+depends:
+  - raw.providers
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.messages
+  target_table: raw.messages
+
+columns:
+  - name: id
+    extends: Message.ID
+  - name: provider_id
+    extends: Message.ProviderID
+  - name: provider_message_id
+    extends: Message.ProviderMessageID
+  - name: season_id
+    extends: Message.SeasonID
+  - name: channel_id
+    extends: Message.ChannelID
+  - name: content
+    extends: Message.Content
+  - name: obtained_experience
+    extends: Message.ObtainedExperience
+  - name: sent_at
+    extends: Message.SentAt
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

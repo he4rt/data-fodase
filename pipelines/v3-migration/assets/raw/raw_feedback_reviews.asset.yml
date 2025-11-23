@@ -1,0 +1,30 @@
+name: raw.feedback_reviews
+type: ingestr
+
+depends:
+  - raw.feedbacks
+  - raw.users
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.feedback_reviews
+  target_table: raw.feedback_reviews
+
+columns:
+  - name: id
+    extends: FeedbackReview.ID
+  - name: feedback_id
+    extends: FeedbackReview.FeedbackID
+  - name: staff_id
+    extends: FeedbackReview.StaffID
+  - name: status
+    extends: FeedbackReview.Status
+  - name: reason
+    extends: FeedbackReview.Reason
+  - name: received_at
+    extends: FeedbackReview.ReceivedAt
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

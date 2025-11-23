@@ -1,0 +1,13 @@
+name: v3-migration
+
+default_connections:
+    postgres: "pg-default"
+    mysql: "mysql-default"
+
+default:
+  type: ingestr
+  parameters:
+    source_connection: "mysql-default"
+    destination: postgres
+
+concurrency: 2

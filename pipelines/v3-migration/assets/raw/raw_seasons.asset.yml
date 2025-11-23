@@ -1,0 +1,32 @@
+name: raw.seasons
+type: ingestr
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.seasons
+  target_table: raw.seasons
+
+columns:
+  - name: id
+    extends: Season.ID
+  - name: name
+    extends: Season.Name
+  - name: description
+    extends: Season.Description
+  - name: started_at
+    extends: Season.StartedAt
+  - name: ended_at
+    extends: Season.EndedAt
+  - name: messages_count
+    extends: Season.MessagesCount
+  - name: participants_count
+    extends: Season.ParticipantsCount
+  - name: meeting_count
+    extends: Season.MeetingCount
+  - name: badges_count
+    extends: Season.BadgesCount
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

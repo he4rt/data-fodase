@@ -1,0 +1,25 @@
+name: public.characters_leveling_logs
+type: ingestr
+
+depends:
+  - public.characters
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.characters_leveling_logs
+  target_table: public.characters_leveling_logs
+
+columns:
+  - name: id
+    extends: CharacterLevelingLog.ID
+  - name: season_id
+    extends: CharacterLevelingLog.SeasonID
+  - name: character_id
+    extends: CharacterLevelingLog.CharacterID
+  - name: level
+    extends: CharacterLevelingLog.Level
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

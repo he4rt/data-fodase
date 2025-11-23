@@ -1,0 +1,3 @@
+.bruin.yml
+logs/runs
+logs/*.log

@@ -1,0 +1,24 @@
+name: raw.badges
+type: ingestr
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.badges
+  target_table: raw.badges
+
+columns:
+  - name: id
+    extends: Badge.ID
+  - name: name
+    extends: Badge.Name
+  - name: description
+    extends: Badge.Description
+  - name: redeem_code
+    extends: Badge.RedeemCode
+  - name: active
+    extends: Badge.Active
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

@@ -1,0 +1,20 @@
+name: raw.users
+type: ingestr
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.users
+  target_table: raw.users
+
+columns:
+  - name: id
+    extends: User.ID
+  - name: username
+    extends: User.Username
+  - name: is_donator
+    extends: User.IsDonator
+  - name: created_at
+    extends: User.CreatedAt
+  - name: updated_at
+    extends: User.UpdatedAt

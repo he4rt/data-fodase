@@ -1,0 +1,33 @@
+name: public.user_information
+type: ingestr
+
+depends:
+  - public.users
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.user_information
+  target_table: public.user_information
+
+columns:
+  - name: id
+    extends: UserInformation.ID
+  - name: user_id
+    extends: UserInformation.UserID
+  - name: name
+    extends: UserInformation.Name
+  - name: nickname
+    extends: UserInformation.Nickname
+  - name: linkedin_url
+    extends: UserInformation.LinkedinURL
+  - name: github_url
+    extends: UserInformation.GithubURL
+  - name: birthdate
+    extends: UserInformation.Birthdate
+  - name: about
+    extends: UserInformation.About
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

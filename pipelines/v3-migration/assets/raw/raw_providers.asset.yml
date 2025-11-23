@@ -1,0 +1,27 @@
+name: raw.providers
+type: ingestr
+
+depends:
+  - raw.users
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.providers
+  target_table: raw.providers
+
+columns:
+  - name: id
+    extends: Provider.ID
+  - name: user_id
+    extends: Provider.UserID
+  - name: provider
+    extends: Provider.Provider
+  - name: provider_id
+    extends: Provider.ProviderID
+  - name: email
+    extends: Provider.Email
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

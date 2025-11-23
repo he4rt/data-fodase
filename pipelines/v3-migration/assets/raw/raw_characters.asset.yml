@@ -1,0 +1,28 @@
+name: raw.characters
+type: ingestr
+
+depends:
+  - raw.users
+  - raw.seasons
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.characters
+  target_table: raw.characters
+
+columns:
+  - name: id
+    extends: Character.ID
+  - name: user_id
+    extends: Character.UserID
+  - name: experience
+    extends: Character.Experience
+  - name: reputation
+    extends: Character.Reputation
+  - name: daily_bonus_claimed_at
+    extends: Character.DailyBonusClaimedAt
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

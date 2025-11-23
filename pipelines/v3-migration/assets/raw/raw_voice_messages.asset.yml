@@ -1,0 +1,30 @@
+name: raw.voice_messages
+type: ingestr
+
+depends:
+  - raw.users
+  - raw.providers
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.voice_messages
+  target_table: raw.voice_messages
+
+columns:
+  - name: id
+    extends: VoiceMessage.ID
+  - name: provider_id
+    extends: VoiceMessage.ProviderID
+  - name: season_id
+    extends: VoiceMessage.SeasonID
+  - name: channel_name
+    extends: VoiceMessage.ChannelName
+  - name: state
+    extends: VoiceMessage.State
+  - name: obtained_experience
+    extends: VoiceMessage.ObtainedExperience
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp

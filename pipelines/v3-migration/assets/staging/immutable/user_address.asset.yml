@@ -1,0 +1,29 @@
+name: public.user_address
+type: ingestr
+
+depends:
+  - public.users
+
+parameters:
+  destination: postgres
+  source_connection: "mysql-default"
+  source_table: dev_he4rt.user_address
+  target_table: public.user_address
+
+columns:
+  - name: id
+    extends: UserAddress.ID
+  - name: user_id
+    extends: UserAddress.UserID
+  - name: country
+    extends: UserAddress.Country
+  - name: state
+    extends: UserAddress.State
+  - name: city
+    extends: UserAddress.City
+  - name: zip_code
+    extends: UserAddress.ZipCode
+  - name: created_at
+    type: timestamp
+  - name: updated_at
+    type: timestamp
