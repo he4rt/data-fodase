@@ -9,6 +9,8 @@ materialization:
 
 depends:
   - raw.users
+  - raw.messages
+  - raw.providers
 
 columns:
   - name: id

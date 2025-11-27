@@ -3,6 +3,7 @@ type: ingestr
 
 depends:
   - raw.users
+  - raw.characters
 
 parameters:
   destination: postgres

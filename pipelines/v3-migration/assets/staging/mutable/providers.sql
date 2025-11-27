@@ -40,6 +40,8 @@ SELECT
     p.provider,
     p.provider_id,
     p.email,
+    NULL as avatar,
+    NULL as username,
     p.created_at,
     p.updated_at,
     'He4rt\\User\\Models\\User' as model_type,

@@ -1,7 +1,3 @@
-This is the structure from He4rt Bot 3.x which is based on PostgreSQL 16
-
-
-```sql
 create table public.migrations
 (
     id        serial
@@ -251,7 +247,8 @@ create table public.tenants
     active     boolean      not null,
     created_at timestamp(0),
     updated_at timestamp(0),
-    deleted_at timestamp(0)
+    deleted_at timestamp(0),
+    domain     varchar(255)
 );
 
 alter table public.tenants
@@ -331,6 +328,8 @@ create table public.providers
     provider    varchar(255) not null,
     provider_id varchar(255) not null,
     email       varchar(255),
+    avatar      varchar(255),
+    username    varchar(255),
     created_at  timestamp(0),
     updated_at  timestamp(0),
     model_type  varchar(255) default 'He4rt\User\Models\User'::character varying,
@@ -357,7 +356,6 @@ create table public.messages
         constraint messages_provider_id_foreign
             references public.providers,
     provider_message_id varchar(255),
-    season_id           integer not null,
     channel_id          varchar(255),
     content             text    not null,
     obtained_experience integer not null,
@@ -516,13 +514,13 @@ create table public.characters_leveling_logs
 (
     id           uuid    not null
         primary key,
-    season_id    integer not null,
     character_id uuid    not null
         constraint characters_leveling_logs_character_id_foreign
             references public.characters,
     level        integer not null,
     created_at   timestamp(0),
-    updated_at   timestamp(0)
+    updated_at   timestamp(0),
+    season_id    bigint  not null
 );
 
 alter table public.characters_leveling_logs
@@ -535,7 +533,6 @@ create table public.voice_messages
     provider_id         uuid         not null
         constraint voice_messages_provider_id_foreign
             references public.providers,
-    season_id           integer      not null,
     channel_name        varchar(255) not null,
     state               varchar(255) not null,
     obtained_experience integer      not null,
@@ -555,7 +552,7 @@ create table public.media
     id                    bigserial
         primary key,
     model_type            varchar(255) not null,
-    model_id              bigint       not null,
+    model_id              varchar(255) not null,
     uuid                  uuid
         constraint media_uuid_unique
             unique,
@@ -578,7 +575,7 @@ create table public.media
 alter table public.media
     owner to postgres;
 
-create index media_model_type_model_id_index
+create index media_model_idx
     on public.media (model_type, model_id);
 
 create index media_order_column_index
@@ -744,4 +741,3 @@ create table public.characters_wallet
 alter table public.characters_wallet
     owner to postgres;
 
-```
